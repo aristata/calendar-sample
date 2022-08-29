@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import TodayIcon from "@mui/icons-material/Today";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { fontSize, spacing } from "@mui/system";
 
@@ -33,9 +34,11 @@ const CalendarHeader = ({ currentMonth }: CalendarHeaderProps) => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          <NavigateBeforeIcon sx={{ fontSize: 40 }} />
-          <Button>이번 달</Button>
-          <NavigateNextIcon sx={{ fontSize: 40 }} />
+          <NavigateBeforeIcon sx={{ fontSize: 30, color: "#757de8" }} />
+          <Button variant="text" startIcon={<TodayIcon />}>
+            이번 달
+          </Button>
+          <NavigateNextIcon sx={{ fontSize: 30, color: "#757de8" }} />
         </Stack>
       </Grid>
     </Grid>
