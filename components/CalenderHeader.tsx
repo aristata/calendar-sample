@@ -6,10 +6,18 @@ import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { fontSize, spacing } from "@mui/system";
 
 interface CalendarHeaderProps {
-  currentMonth: Date | number;
+  currentMonth: Date;
+  goToPrevMonth: () => void;
+  goToNextMonth: () => void;
+  goToCurrentMonth: () => void;
 }
 
-const CalendarHeader = ({ currentMonth }: CalendarHeaderProps) => {
+const CalendarHeader = ({
+  currentMonth,
+  goToPrevMonth,
+  goToNextMonth,
+  goToCurrentMonth
+}: CalendarHeaderProps) => {
   console.log(currentMonth);
   return (
     <Grid
@@ -34,11 +42,21 @@ const CalendarHeader = ({ currentMonth }: CalendarHeaderProps) => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          <NavigateBeforeIcon sx={{ fontSize: 30, color: "#757de8" }} />
-          <Button variant="text" startIcon={<TodayIcon />}>
+          <NavigateBeforeIcon
+            sx={{ fontSize: 30, color: "#757de8" }}
+            onClick={goToPrevMonth}
+          />
+          <Button
+            variant="text"
+            startIcon={<TodayIcon />}
+            onClick={goToCurrentMonth}
+          >
             이번 달
           </Button>
-          <NavigateNextIcon sx={{ fontSize: 30, color: "#757de8" }} />
+          <NavigateNextIcon
+            sx={{ fontSize: 30, color: "#757de8" }}
+            onClick={goToNextMonth}
+          />
         </Stack>
       </Grid>
     </Grid>
