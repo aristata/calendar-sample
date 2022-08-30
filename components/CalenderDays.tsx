@@ -17,17 +17,12 @@ const CalenderDays = () => {
       direction={"row"}
       justifyContent={"space-between"}
       sx={{
-        border: 1,
-        p: 1
+        p: 1,
+        borderBottom: 1
       }}
     >
       {days.map((day, index) => (
-        <Grid
-          item
-          key={index}
-          xs={0.95}
-          sx={{ border: 1, p: 1, textAlign: "center" }}
-        >
+        <Grid item key={index} xs={0.95} sx={{ p: 1, textAlign: "center" }}>
           <span>{day}</span>
         </Grid>
       ))}
