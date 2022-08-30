@@ -24,7 +24,6 @@ const CalendarHeader = ({
       container
       columns={7}
       sx={{
-        border: 1,
         p: 2
       }}
     >
