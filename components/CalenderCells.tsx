@@ -4,8 +4,10 @@ import {
   endOfMonth,
   startOfWeek,
   endOfWeek,
-  eachDayOfInterval
+  eachDayOfInterval,
+  format
 } from "date-fns";
+import { dynamicClass } from "@libs/utils";
 
 //   selectedDate?: Date;
 //  onDateClick?: () => void;
@@ -27,7 +29,10 @@ const CalenderCells = ({ currentMonth }: CalenderCellsProps) => {
   const endDate = endOfWeek(monthEnd);
 
   // 날짜들
-  const days = eachDayOfInterval({ start: startDate, end: endDate });
+  const dates = eachDayOfInterval({ start: startDate, end: endDate });
+  const days = dates.map((day) => {
+    return format(day, "d");
+  });
 
   return (
     <Grid container columns={7} direction={"row"} sx={{}}>
@@ -38,7 +43,18 @@ const CalenderCells = ({ currentMonth }: CalenderCellsProps) => {
           xs={1}
           sx={{ borderBottom: 1, height: 100, p: 1 }}
         >
-          {JSON.stringify(day)}
+          <span
+            className={dynamicClass(
+              index % 7 === 0
+                ? "text-red-600"
+                : index % 7 === 6
+                ? "text-red-600"
+                : "text-gray-700",
+              "font-bold"
+            )}
+          >
+            {day}
+          </span>
         </Grid>
       ))}
     </Grid>
