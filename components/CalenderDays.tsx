@@ -22,7 +22,7 @@ const CalenderDays = () => {
       }}
     >
       {days.map((day, index) => (
-        <Grid item key={index} xs={0.95} sx={{ p: 1, textAlign: "center" }}>
+        <Grid item key={index} xs={0.95} sx={{ p: 1, textAlign: "start" }}>
           <span>{day}</span>
         </Grid>
       ))}
