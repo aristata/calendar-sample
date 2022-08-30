@@ -1,4 +1,5 @@
 import CalendarHeader from "@components/CalenderHeader";
+import CalendarDays from "@components/CalenderDays";
 import { addMonths, subMonths } from "date-fns";
 import { NextPage } from "next";
 import React, { useState } from "react";
@@ -27,7 +28,7 @@ const CalendarPage: NextPage = () => {
         goToNextMonth={goToNextMonth}
         goToCurrentMonth={goToCurrentMonth}
       />
-      <div>Days</div>
+      <CalendarDays />
       <div>Body</div>
     </div>
   );
