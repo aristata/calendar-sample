@@ -8,23 +8,23 @@ interface HolidaysResponse {
       resultMsg: string;
     };
     body: {
-      items: [
-        item: {
-          dateKind: string;
-          dateName: string;
-          isHoliday: string;
-          locdate: string;
-          seq: number;
-        }
-      ];
+      items: {
+        item: [
+          {
+            dateKind: string;
+            dateName: string;
+            isHoliday: string;
+            locdate: string;
+            seq: number;
+          }
+        ];
+      };
     };
   };
 }
 
 export default async function handler(req, res) {
   const { year, month } = req.query;
-
-  // console.log(year, month);
 
   // 파라미터
   // solYear: 연도, 4자리, 필수값, 예: 2022

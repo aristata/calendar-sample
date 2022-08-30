@@ -6,7 +6,7 @@ import { NextPage } from "next";
 import React, { useState } from "react";
 import useSWR from "swr";
 
-interface Holiday {
+interface HolidayObject {
   item: {
     dateKind: string;
     dateName: string;
@@ -14,6 +14,17 @@ interface Holiday {
     locdate: string;
     seq: number;
   };
+}
+interface HolidayArray {
+  item: [
+    {
+      dateKind: string;
+      dateName: string;
+      isHoliday: string;
+      locdate: string;
+      seq: number;
+    }
+  ];
 }
 
 const CalendarPage: NextPage = () => {
@@ -35,15 +46,16 @@ const CalendarPage: NextPage = () => {
   const year = format(currentMonth, "yyyy");
   const month = format(currentMonth, "MM");
 
-  const { data: holidays } = useSWR<Holiday[]>(
+  const { data: holidays } = useSWR<HolidayObject | HolidayArray>(
     `/api/holidays?year=${year}&month=${month}`
   );
-  let holidayArray = new Array();
-  if (holidays && !Array.isArray(holidays)) {
-    holidayArray.push(holidays);
-  } else {
-    holidayArray = holidays;
-  }
+  // let holidayArray = new Array();
+  // if (holidays && !Array.isArray(holidays)) {
+  //   holidayArray.push(holidays);
+  // } else {
+  //   // console.log("holidays", holidays);
+  //   // holidayArray = [...holidays];
+  // }
 
   return (
     <div>
@@ -54,7 +66,7 @@ const CalendarPage: NextPage = () => {
         goToCurrentMonth={goToCurrentMonth}
       />
       <CalendarDays />
-      <CalenderCells currentMonth={currentMonth} holidays={holidayArray} />
+      <CalenderCells currentMonth={currentMonth} holidays={holidays} />
     </div>
   );
 };

@@ -5,13 +5,10 @@ import {
   startOfWeek,
   endOfWeek,
   eachDayOfInterval,
-  format,
-  parse
+  format
 } from "date-fns";
 import { dynamicClass } from "@libs/utils";
-import { json } from "stream/consumers";
-
-interface Holiday {
+interface HolidayObject {
   item: {
     dateKind: string;
     dateName: string;
@@ -20,12 +17,23 @@ interface Holiday {
     seq: number;
   };
 }
+interface HolidayArray {
+  item: [
+    {
+      dateKind: string;
+      dateName: string;
+      isHoliday: string;
+      locdate: string;
+      seq: number;
+    }
+  ];
+}
 
 //   selectedDate?: Date;
 //  onDateClick?: () => void;
 interface CalenderCellsProps {
   currentMonth: Date;
-  holidays: Holiday[];
+  holidays: HolidayObject | HolidayArray;
 }
 
 const CalenderCells = ({ currentMonth, holidays }: CalenderCellsProps) => {
@@ -47,12 +55,16 @@ const CalenderCells = ({ currentMonth, holidays }: CalenderCellsProps) => {
     return format(date, "yyyyMMdd");
   });
 
-  const locdates = holidays?.map((holiday) => {
-    // console.log("holiday", holiday);
-    return holiday.item?.locdate;
-  });
-
-  console.log("locdates", locdates);
+  // 공공 데이터에서 데이터를 넘겨 줄때 데이터가 한건이면 오브젝트로 주고, 여러건이면 배열로 주기 때문에
+  // 케이스에 맞게 동작하도록 분기를 나누었다
+  let locdates = new Array();
+  if (Array.isArray(holidays?.item)) {
+    locdates = holidays?.item?.map((holiday) => {
+      return holiday.locdate;
+    });
+  } else {
+    locdates.push(holidays?.item.locdate);
+  }
 
   return (
     <Grid container columns={7} direction={"row"} sx={{}}>
@@ -70,8 +82,6 @@ const CalenderCells = ({ currentMonth, holidays }: CalenderCellsProps) => {
                 : index % 7 === 6
                 ? "text-red-600"
                 : locdates?.find((locdate) => {
-                    console.log("locdate", locdate);
-                    console.log("day", day);
                     return locdate == day;
                   })
                 ? "text-red-600"
