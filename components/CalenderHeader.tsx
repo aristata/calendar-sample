@@ -44,17 +44,20 @@ const CalendarHeader = ({
           <NavigateBeforeIcon
             sx={{ fontSize: 30, color: "#757de8" }}
             onClick={goToPrevMonth}
+            className={"hover:cursor-pointer hover:text-orange-500"}
           />
           <Button
             variant="text"
             startIcon={<TodayIcon />}
             onClick={goToCurrentMonth}
+            className={"hover:cursor-pointer hover:text-orange-500"}
           >
             이번 달
           </Button>
           <NavigateNextIcon
             sx={{ fontSize: 30, color: "#757de8" }}
             onClick={goToNextMonth}
+            className={"hover:cursor-pointer hover:text-orange-500"}
           />
         </Stack>
       </Grid>
