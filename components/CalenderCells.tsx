@@ -50,7 +50,7 @@ const CalenderCells = ({ currentMonth }: CalenderCellsProps) => {
                 : index % 7 === 6
                 ? "text-red-600"
                 : "text-gray-700",
-              "font-bold"
+              "font-bold p-2"
             )}
           >
             {day}
