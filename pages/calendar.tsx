@@ -1,11 +1,10 @@
 import CalendarHeader from "@components/CalenderHeader";
 import CalendarDays from "@components/CalenderDays";
 import CalenderCells from "@components/CalenderCells";
-import { addMonths, getMonth, getYear, subMonths, format } from "date-fns";
+import { addMonths, subMonths, format } from "date-fns";
 import { NextPage } from "next";
 import React, { useState } from "react";
 import useSWR from "swr";
-import { useSwitch } from "@mui/base";
 
 interface Holiday {
   item: {
@@ -39,7 +38,12 @@ const CalendarPage: NextPage = () => {
   const { data: holidays } = useSWR<Holiday[]>(
     `/api/holidays?year=${year}&month=${month}`
   );
-  console.log(holidays);
+  let holidayArray = new Array();
+  if (holidays && !Array.isArray(holidays)) {
+    holidayArray.push(holidays);
+  } else {
+    holidayArray = holidays;
+  }
 
   return (
     <div>
@@ -50,7 +54,7 @@ const CalendarPage: NextPage = () => {
         goToCurrentMonth={goToCurrentMonth}
       />
       <CalendarDays />
-      <CalenderCells currentMonth={currentMonth} />
+      <CalenderCells currentMonth={currentMonth} holidays={holidayArray} />
     </div>
   );
 };

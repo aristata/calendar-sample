@@ -21,7 +21,7 @@ const CalendarHeader = ({
   goToNextMonth,
   goToCurrentMonth
 }: CalendarHeaderProps) => {
-  console.log(currentMonth);
+  // console.log(currentMonth);
   return (
     <Grid
       container
