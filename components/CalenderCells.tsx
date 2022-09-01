@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Skeleton } from "@mui/material";
 import {
   startOfMonth,
   endOfMonth,
@@ -34,9 +34,14 @@ interface HolidayArray {
 interface CalenderCellsProps {
   currentMonth: Date;
   holidays: HolidayObject | HolidayArray;
+  isLoading: boolean;
 }
 
-const CalenderCells = ({ currentMonth, holidays }: CalenderCellsProps) => {
+const CalenderCells = ({
+  currentMonth,
+  holidays,
+  isLoading
+}: CalenderCellsProps) => {
   // 오늘이 속한 달의 시작일
   const monthStart = startOfMonth(currentMonth);
 
@@ -63,36 +68,67 @@ const CalenderCells = ({ currentMonth, holidays }: CalenderCellsProps) => {
       return holiday.locdate;
     });
   } else {
-    locdates.push(holidays?.item.locdate);
+    locdates.push(holidays?.item?.locdate);
   }
 
   return (
     <Grid container columns={7} direction={"row"} sx={{}}>
-      {days.map((day, index) => (
-        <Grid
-          key={index}
-          item
-          xs={1}
-          sx={{ borderBottom: 1, height: 100, p: 1 }}
-        >
-          <span
-            className={dynamicClass(
-              index % 7 === 0
-                ? "text-red-600"
-                : index % 7 === 6
-                ? "text-red-600"
-                : locdates?.find((locdate) => {
-                    return locdate == day;
-                  })
-                ? "text-red-600"
-                : "text-gray-700",
-              "font-bold p-2"
-            )}
-          >
-            {day.slice(-2)}
-          </span>
-        </Grid>
-      ))}
+      {!isLoading
+        ? days.map((day, index) => (
+            <Grid
+              key={index}
+              item
+              xs={1}
+              sx={{ borderBottom: 1, minHeight: 100, p: 1 }}
+            >
+              <span
+                className={dynamicClass(
+                  index % 7 === 0
+                    ? "text-red-600"
+                    : index % 7 === 6
+                    ? "text-red-600"
+                    : locdates?.find((locdate) => {
+                        return locdate == day;
+                      })
+                    ? "text-red-600"
+                    : "text-gray-700",
+                  "font-bold p-2"
+                )}
+              >
+                {day.slice(-2)}
+              </span>
+            </Grid>
+          ))
+        : Array.from({ length: 35 }).map((value, index) => (
+            <Grid
+              key={index}
+              item
+              xs={1}
+              sx={{ borderBottom: 1, minHeight: 100, p: 1 }}
+            >
+              <Skeleton
+                variant="text"
+                animation="wave"
+                width={30}
+                sx={{ fontSize: "1rem" }}
+              />
+              <Skeleton
+                variant="text"
+                animation="wave"
+                sx={{ fontSize: "1rem" }}
+              />
+              <Skeleton
+                variant="text"
+                animation="wave"
+                sx={{ fontSize: "1rem" }}
+              />
+              <Skeleton
+                variant="text"
+                animation="wave"
+                sx={{ fontSize: "1rem" }}
+              />
+            </Grid>
+          ))}
     </Grid>
   );
 };

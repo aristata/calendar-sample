@@ -30,6 +30,7 @@ interface HolidayArray {
 const CalendarPage: NextPage = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isLoading, setIsLoading] = useState(true);
 
   const goToPrevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
@@ -47,15 +48,14 @@ const CalendarPage: NextPage = () => {
   const month = format(currentMonth, "MM");
 
   const { data: holidays } = useSWR<HolidayObject | HolidayArray>(
-    `/api/holidays?year=${year}&month=${month}`
+    `/api/holidays?year=${year}&month=${month}`,
+    {
+      onSuccess: () => {
+        setIsLoading(false);
+      },
+      dedupingInterval: 10000
+    }
   );
-  // let holidayArray = new Array();
-  // if (holidays && !Array.isArray(holidays)) {
-  //   holidayArray.push(holidays);
-  // } else {
-  //   // console.log("holidays", holidays);
-  //   // holidayArray = [...holidays];
-  // }
 
   return (
     <div>
@@ -66,7 +66,11 @@ const CalendarPage: NextPage = () => {
         goToCurrentMonth={goToCurrentMonth}
       />
       <CalendarDays />
-      <CalenderCells currentMonth={currentMonth} holidays={holidays} />
+      <CalenderCells
+        currentMonth={currentMonth}
+        holidays={holidays}
+        isLoading={isLoading}
+      />
     </div>
   );
 };
