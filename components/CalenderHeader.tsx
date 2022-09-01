@@ -3,10 +3,7 @@ import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import TodayIcon from "@mui/icons-material/Today";
 import CircleIcon from "@mui/icons-material/Circle";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
-import { fontSize, spacing } from "@mui/system";
-import { Height } from "@mui/icons-material";
-import { relative } from "path";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 
 interface CalendarHeaderProps {
   currentMonth: Date;
